@@ -1,0 +1,110 @@
+<p>
+  <b>
+    ¡Bienvenido! Por favor, ingresa tu correo electrónico para iniciar sesión.
+  </b>
+</p>
+
+@if (showError) {
+<p class="alert alert-error">
+  Los datos introducidos son incorrectos. Por favor revise sus datos de acceso y vuelva a intentarlo.
+</p>
+}
+
+<form [formGroup]="form">
+  <!-- Email Input -->
+   <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input
+        matInput
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        formControlName="email"
+        placeholder="usuario@email.com"
+        (keyup)="showError = false"
+        required
+      />
+      <mat-icon matSuffix>mail</mat-icon>
+      @if (showErrorMessage('email', 'required')) {
+        <mat-hint class="mat-error">Por favor completa este campo.</mat-hint>
+      }
+
+      @if (showErrorMessage('email', 'email')) {
+        <mat-hint class="mat-error">Por favor introduce un correo valido.</mat-hint>
+      }
+    </mat-form-field>
+  </p>
+
+  <!-- Verify Button -->
+   @if (!isEmailVerified) {
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      class="start-btn"
+      (click)="verifyEmail()"
+      [disabled]="isButtonDisabled"
+    >
+      Continuar
+    </button>
+   }
+
+  <!-- Password Input (Shown after verification) -->
+   <p *ngIf="isEmailVerified">
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input
+        matInput
+        [type]="passwordVisible ? 'text' : 'password'"
+        id="password"
+        name="password"
+        class="form-control"
+        formControlName="password"
+        (keyup)="showError = false"
+        required
+      />
+
+      @if (passwordVisible) {
+        <mat-icon matSuffix (click)="passwordVisible = !passwordVisible">visibility_off</mat-icon>
+      } @else {
+        <mat-icon matSuffix (click)="passwordVisible = !passwordVisible">visibility</mat-icon>
+      }
+
+      @if (showErrorMessage('password', 'required')) {
+        <mat-hint class="mat-error">Por favor completa este campo.</mat-hint>
+      }
+
+      @if (showErrorMessage('password', 'minlength')) {
+        <mat-hint class="mat-error">Por favor introduce al menos {{ form.controls['password'].errors?.['minlength']?.requiredLength }} caracteres.</mat-hint>
+      }
+    </mat-form-field>
+  </p>
+
+  <!-- Login Button -->
+  <button
+    *ngIf="isEmailVerified"
+    type="submit"
+    mat-raised-button
+    color="primary"
+    (click)="login()"
+    [disabled]="!form.valid"
+  >
+    Iniciar sessión
+  </button>
+</form>
+
+<!-- Create New Account Option -->
+<div class="create-account">
+  <p class="good-luck-txt">¿No tienes una cuenta aún?</p>
+  <button
+    mat-raised-button
+    color="secondary"
+    type="button"
+    class="start-btn"
+    routerLink="/registration"
+  >
+    Registrarme
+  </button>
+</div>
