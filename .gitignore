@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 
 .nx/
+requests.http
+pnpm-lock.yaml
