@@ -1,1 +1,16 @@
-<router-outlet />
+<header class="mat-elevation-z1">
+  <img alt="Logo de ATOM Chat" ngSrc="assets/images/logo-atom-chat.png" routerLink="/home" width="192.5" height="55" priority/>
+  @if (showSubtitleInHeader) {
+    <h1 class="welcome-txt">{{ subtitle }}</h1>
+  }
+</header>
+<div class="main-container">
+  @if (!showSubtitleInHeader) {
+    <h1 class="welcome-txt">{{ subtitle }}</h1>
+  }
+  <div class="content-wrapper">
+    <router-outlet />
+  </div>
+</div>
+
+<loading-indicator />

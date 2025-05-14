@@ -109,3 +109,32 @@ $atom-challenge-fe-template-theme: mat.define-light-theme((
 
 
 /* You can add global styles to this file, and also import other style files */
+
+.good-luck-txt {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.welcome-txt {
+  text-align: center;
+}
+
+.alert {
+  padding: 15px 10px;
+  border-radius: 4px;
+
+  &-error {
+    color: #fff;
+    background-color: #f44336;
+  }
+
+  &-success {
+    color: #fff;
+    background-color: #46a35e;
+  }
+}
+
+.mat-error {
+  color: #f44336;
+  font-weight: bold;
+}
