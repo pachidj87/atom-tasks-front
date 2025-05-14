@@ -1,0 +1,128 @@
+<p>
+  <b>
+    ¡Bienvenido! Por favor, ingresa tus datos para registrarte en el sistema.
+  </b>
+</p>
+
+@if (showError) {
+<p class="alert alert-error">
+  Ha ocurrido un error intentando realizar la operación.
+</p>
+}
+
+<form [formGroup]="form">
+  <!-- Email Input -->
+   <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input
+        matInput
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        formControlName="email"
+        placeholder="usuario@email.com"
+        required
+      />
+      <mat-icon matSuffix>mail</mat-icon>
+      @if (showErrorMessage('email', 'required')) {
+        <mat-hint class="mat-error">Por favor completa este campo.</mat-hint>
+      }
+
+      @if (showErrorMessage('email', 'email')) {
+        <mat-hint class="mat-error">Por favor introduce un correo valido.</mat-hint>
+      }
+    </mat-form-field>
+  </p>
+
+  <!-- Password Input -->
+   <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input
+        matInput
+        [type]="visible.password ? 'text' : 'password'"
+        id="password"
+        name="password"
+        class="form-control"
+        formControlName="password"
+        required
+      />
+
+      @if (visible.password) {
+        <mat-icon matSuffix (click)="visible.password = !visible.password">visibility_off</mat-icon>
+      } @else {
+        <mat-icon matSuffix (click)="visible.password = !visible.password">visibility</mat-icon>
+      }
+
+      @if (showErrorMessage('password', 'required')) {
+        <mat-hint class="mat-error">Por favor completa este campo.</mat-hint>
+      }
+
+      @if (showErrorMessage('password', 'minlength')) {
+        <mat-hint class="mat-error">Por favor introduce al menos {{ form.controls['password'].errors?.['minlength']?.requiredLength }} caracteres.</mat-hint>
+      }
+
+      @if (!showErrorMessage('password', 'minlength') && showErrorMessage('password', 'match')) {
+        <mat-hint class="mat-error">Las contraseñas no coinciden.</mat-hint>
+      }
+    </mat-form-field>
+  </p>
+
+  <!-- Password Confirmation Input -->
+   <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Confirmar contraseña</mat-label>
+      <input
+        matInput
+        [type]="visible.passwordConfirmation ? 'text' : 'password'"
+        id="passwordConfirmation"
+        name="passwordConfirmation"
+        class="form-control"
+        formControlName="passwordConfirmation"
+        required
+      />
+
+      @if (visible.passwordConfirmation) {
+        <mat-icon matSuffix (click)="visible.passwordConfirmation = !visible.passwordConfirmation">visibility_off</mat-icon>
+      } @else {
+        <mat-icon matSuffix (click)="visible.passwordConfirmation = !visible.passwordConfirmation">visibility</mat-icon>
+      }
+
+      @if (showErrorMessage('passwordConfirmation', 'required')) {
+        <mat-hint class="mat-error">Por favor completa este campo.</mat-hint>
+      }
+
+      @if (showErrorMessage('passwordConfirmation', 'match')) {
+        <mat-hint class="mat-error">Las contraseñas no coinciden.</mat-hint>
+      }
+    </mat-form-field>
+  </p>
+
+  <!-- Registration Button -->
+  <button
+    mat-raised-button
+    color="primary"
+    type="button"
+    class="start-btn"
+    (click)="createAccount()"
+    [disabled]="!form.valid"
+  >
+    Registrarme
+  </button>
+</form>
+
+<!-- Create New Account Option -->
+<div class="create-account">
+  <p class="good-luck-txt">¿Ya tienes cuenta?</p>
+  <button
+    mat-raised-button
+    color="secondary"
+    type="button"
+    class="start-btn"
+    routerLink="/login"
+  >
+    Iniciar sesión
+  </button>
+</div>
