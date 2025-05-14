@@ -1,0 +1,109 @@
+<p>
+  <b>
+    Esta es tu página de tareas. Aquí podrás ver todas las tareas que has creado y su estado.
+  </b>
+  <br><br>
+  Puedes cambiar el estado de las tareas haciendo clic en el botón "Completado" o "En proceso".
+  <br><br>
+</p>
+
+@if (showError) {
+<p class="alert alert-error">
+  Ha ocurrido un error intentando realizar la operacion. Nuestro equipo de soporte trabaja arduamente para resolver el problema ;D. <br>Por favor intenta nuevamente en unos minutos.
+</p>
+}
+
+@if (showSuccess) {
+<p class="alert alert-success">
+  La tarea se actualizó con éxito. Puede continuar editando la tarea o volver al listado.
+</p>
+}
+
+<br>
+
+<form [formGroup]="form">
+  <!-- Title Input -->
+   <input type="hidden" name="ownerId" formControlName="ownerId">
+
+   <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Título</mat-label>
+      <input
+        matInput
+        type="title"
+        id="title"
+        name="title"
+        class="form-control"
+        formControlName="title"
+        placeholder="Título de la tarea"
+        required
+      />
+      @if (showErrorMessage('email', 'required')) {
+        <mat-hint class="mat-error">Por favor completa este campo.</mat-hint>
+      }
+    </mat-form-field>
+  </p>
+
+  <!-- Description Input -->
+   <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        type="description"
+        id="de"
+        name="description"
+        class="form-control"
+        formControlName="description"
+        placeholder="Description de la tarea"
+        required
+      ></textarea>
+      @if (showErrorMessage('email', 'required')) {
+        <mat-hint class="mat-error">Por favor completa este campo.</mat-hint>
+      }
+    </mat-form-field>
+  </p>
+
+  <!-- Status Input -->
+   <p>
+      <mat-checkbox
+        matInput
+        id="isCompleted"
+        name="isCompleted"
+        class="form-control"
+        formControlName="isCompleted"
+        [checked]="isCompleted"
+        (change)="updateStatus($event)"
+        aria-label="Estado de la tarea">
+        {{ isCompleted ? 'Completado' : 'En proceso' }}
+      </mat-checkbox>
+  </p>
+
+  <!-- Create Button -->
+  <p>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      class="start-btn"
+      (click)="updateTask()"
+      [disabled]="!form.valid"
+    >
+      Guardar
+    </button>
+  </p>
+
+</form>
+
+<!-- Create New Account Option -->
+<div class="create-account">
+  <button
+    mat-raised-button
+    color="secondary"
+    type="button"
+    class="start-btn"
+    routerLink="/tasks"
+  >
+    Volver al listado de tareas
+  </button>
+</div>
