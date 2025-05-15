@@ -9,7 +9,7 @@ Siéntete libre de clonar este repositorio y utilizarlo como base para el desarr
 De igual manera puedes documentar dentro de este archivo todo lo que deseas contar sobre tu desarrollo, como por ejemplo, decisiones de diseño, problemas encontrados, etc.
 
 ## Comentarios sobre el desarrollo
-...
+Para ejecutar el proyecto solo clonar desde el repositorio, instalar los paquetes `npm install` y configurar en los ficheros de configuración environments la URL que apunta a la API y luego iniciar el dev server.
 
 ## Development server
 
